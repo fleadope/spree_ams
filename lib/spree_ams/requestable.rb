@@ -5,7 +5,7 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          prepend_before_filter :set_access_control_headers
+          prepend_before_action :set_access_control_headers
         end
 
         private
@@ -21,7 +21,7 @@ module Spree
         # current api user loaded.
         def load_user
           super
-          @current_api_user = User.new if @current_api_user.nil?
+          @current_api_user = Spree.user_class.new if @current_api_user.nil?
         end
 
         # Allow the current order to be be
